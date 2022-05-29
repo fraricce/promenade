@@ -4,6 +4,9 @@ package main
 
 import (
 	"fmt"
+	"os"
+
+	"strconv"
 )
 
 type Vertex struct {
@@ -141,6 +144,10 @@ func main() {
 	v8 := &Vertex{id: 8, name: "Villiers"}
 	v9 := &Vertex{id: 9, name: "Pl.De Clichy"}
 	v10 := &Vertex{id: 10, name: "Europe"}
+	v11 := &Vertex{id: 11, name: "Opera"}
+	v12 := &Vertex{id: 12, name: "Roosevelt"}
+	v13 := &Vertex{id: 13, name: "Champs Elysées"}
+	v14 := &Vertex{id: 14, name: "Alma"}
 
 	g.AddVertex(v)
 	g.AddVertex(v2)
@@ -152,20 +159,39 @@ func main() {
 	g.AddVertex(v8)
 	g.AddVertex(v9)
 	g.AddVertex(v10)
+	g.AddVertex(v11)
+	g.AddVertex(v12)
+	g.AddVertex(v13)
+	g.AddVertex(v14)
 
 	g.AddEdge(v, v2)
 	g.AddEdge(v2, v3)
 	g.AddEdge(v3, v4)
+	g.AddEdge(v4, v12)
+	g.AddEdge(v12, v13)
+	g.AddEdge(v12, v14)
 	g.AddEdge(v3, v5)
 	g.AddEdge(v5, v6)
 	g.AddEdge(v6, v7)
 	g.AddEdge(v7, v8)
 	g.AddEdge(v8, v9)
 	g.AddEdge(v8, v10)
+	g.AddEdge(v10, v11)
 
-	//g.Print()
+	argsWithoutProg := os.Args[1:]
+
+	if (len(argsWithoutProg)) != 2 {
+		panic("Wrong number of arguments: required 2")
+	}
+
+	startArg := argsWithoutProg[0]
+	endArg := argsWithoutProg[1]
+
+	start, _ := strconv.Atoi(startArg)
+	end, _ := strconv.Atoi(endArg)
+
 	fmt.Println()
-	path := g.FindPath(2, 9)
+	path := g.FindPath(start, end)
 	for _, n := range path {
 		fmt.Printf(" -> %s", n.name)
 	}
